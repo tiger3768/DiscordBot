@@ -1,20 +1,25 @@
 import discord
 import os
+from discord.ext import commands
 from dotenv import load_dotenv
 
 load_dotenv("dt.env")
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 
-bot = discord.Client()
-
+#bot=discord.Client()
+intents = discord.Intents.default()
+bot=commands.Bot(command_prefix = ".",intents=intents)
+cogs=["events.on_message"]
 @bot.event
 async def on_ready():
-	guild_count = 0
-	for guild in bot.guilds:
-		print(f"- {guild.id} (name: {guild.name})")
-		guild_count = guild_count + 1
-	print("SampleDiscordBot is in " + str(guild_count) + " guilds.")
+	print("The bot is ready!")
+	for cog in cogs:
+		try:
+			bot.load_extension(cog)
+			print(f"{cog} was loaded.")
+		except Exception as e:
+			print(e)
 aemojis={}
 @bot.event
 async def on_message(message):
@@ -24,17 +29,11 @@ async def on_message(message):
                 await message.channel.send("Hey")
         if message.content=="<@!{0}> ja na lode".format(bot.user.id):
                 await message.delete()
-                print(message.author)
                 await message.channel.send("Kuch bol rha tha kya tu <@{0}> ?".format(message.author.id))
                 await message.channel.send("<:emoji_54:774352560639180820>")
-        for x in bot.emojis:
-                if x.animated==True:
-                   aemojis[':%s:'%x.name]=('<a:%s:%s>')%(x.name,x.id)
-        if message.content in aemojis.keys():
-                await message.delete()
-                await message.channel.send(aemojis[message.content])
-
-                
+           
 
 
 bot.run(DISCORD_TOKEN)
+
+
