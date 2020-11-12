@@ -21,18 +21,20 @@ async def on_ready():
 		except Exception as e:
 			print(e)
 prefix="$"
+@bot.event
 async def on_message(message):
     if message.content==prefix+"snipe":
-        await snipe()
+        await snipe(message)
     if message.content==f"<@!{bot.user.id}> ja na lode":
         await message.delete()
-        await message.cahnnel.send("Kuch bol rha tha kya tu ? "+f"<@{message.author.id}>")
-        await message.channel.send("<:pain-1:775328621714997279>")
+        await message.channel.send("Kuch bol rha tha kya tu ? "+f"<@{message.author.id}>")
+        await message.channel.send("<:pain:775328621714997279>")
         
 snipe_message_content = None
 snipe_message_author = None
 snipe_message_id = None
 
+@bot.event
 async def on_message_delete(message):
 
     global snipe_message_content
