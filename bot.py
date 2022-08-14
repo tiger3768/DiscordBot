@@ -25,10 +25,9 @@ prefix="$"
 async def on_message(message):
     if message.content==prefix+"snipe":
         await snipe(message)
-    if message.content==f"<@!{bot.user.id}> ja na lode":
+    if message.content==f"<@!{bot.user.id}> Hi":
         await message.delete()
-        await message.channel.send("Kuch bol rha tha kya tu ? "+f"<@{message.author.id}>")
-        await message.channel.send("<:pain:775328621714997279>")
+        await message.channel.send("Hello"+f"<@{message.author.id}>")
         
 snipe_message_content = None
 snipe_message_author = None
